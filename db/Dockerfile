@@ -1,5 +1,5 @@
 # FROM mysql:5.7
-FROM mysql/mysql-server:5.7.28
+FROM --platform=linux/amd64 mysql:5.7
 
 RUN touch /var/log/mysql/mysqld.log
 EXPOSE 3306
