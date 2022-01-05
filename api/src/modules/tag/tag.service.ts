@@ -10,7 +10,7 @@ export class TagService {
     private readonly _tagRepository,
     private readonly _articleTagRepository,
   ) {}
-  
+
   //tag作成処理
   async createTag(param) {
     const newTag = new Tag();
