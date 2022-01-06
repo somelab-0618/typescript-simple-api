@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { nanoid } from 'nanoid';
+import { UserRepository } from 'src/ripositories/user.repository';
 
 @Injectable()
 export class UserService implements  {
-  constructor(private readonly _userRepository) {}
+  constructor(private readonly _userRepository: UserRepository) {}
   
   //user作成処理
   async createUser(param) {

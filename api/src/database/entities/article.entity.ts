@@ -18,7 +18,7 @@ export class Article extends BaseEntity {
 
     @ManyToOne(type => User, user => user.articles)
 
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'userId' })
     user?: User;
 
     @Column('varchar', { name: 'title'})

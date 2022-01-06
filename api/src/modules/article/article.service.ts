@@ -9,11 +9,11 @@ import { TagRepository } from 'src/ripositories/tag.repository';
 @Injectable()
 export class ArticleService {
   constructor(
-    private readonly _articleRepository,
-    private readonly _articleTagRepository,
-    private readonly _tagRepository,
+    private readonly _articleRepository: ArticleRepository,
+    private readonly _articleTagRepository: ArticleTagRepository,
+    private readonly _tagRepository: TagRepository,
   ) { }
-  
+
   //article作成処理
   async createArticle(param) {
     const newArticle = new Article();
@@ -39,11 +39,11 @@ export class ArticleService {
 
   //Article全件取得
   async getArticles() {
-    const articles = [];
+    const articles: Article[] = [];
     const articlesData = await this._articleRepository.find();
 
     await Promise.all(articlesData.map(async article => {
-      const tags = [];
+      const tags: Tag[] = [];
       const articleTags = await this._articleTagRepository.find({
         where: { articleId: article.id },
       });
@@ -62,11 +62,11 @@ export class ArticleService {
   }
 
   //article取得
-  async findArticle(articleId) {
+  async findArticle(articleId: number) {
     const article = await this._articleRepository.findOne(articleId);
     if (!article) throw new NotFoundException();
 
-    const articleTags = await this._articleTagRepository.find({
+    const articleTags: ArticleTag[] = await this._articleTagRepository.find({
       where: { articleId: articleId },
     });
 
@@ -81,7 +81,7 @@ export class ArticleService {
   }
 
   //article更新処理
-  async updateArticle(articleId, param) {
+  async updateArticle(articleId: number, param) {
     const origin = await this._articleRepository.findOne(articleId);
     if (!origin) throw new NotFoundException();
     const article = await this._articleRepository.save({
@@ -92,13 +92,13 @@ export class ArticleService {
   }
 
   //articleに紐づくタグ削除処理
-  async releaseTag(articleId, tagId) {
+  async releaseTag(articleId: number, tagId: number) {
     const result = await this._articleTagRepository.delete({ articleId: articleId, tagId: tagId});
 
     return result;
   }
 
-  async deleteArticle(articleId) {
+  async deleteArticle(articleId: number) {
     const deleteArticleTag = await this._articleTagRepository.delete({ articleId: articleId });
 
     const result = await this._articleRepository.delete(articleId);

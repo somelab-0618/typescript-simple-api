@@ -20,23 +20,23 @@ export class ArticleTag extends BaseEntity {
     id!: number;
 
     @PrimaryColumn()
-    article_id: number;
+    articleId: number;
 
     @ManyToOne(() => Article, (article) => article.id, {
         onDelete: 'CASCADE'
     })
 
-    @JoinColumn({ name: 'article_id'})
+    @JoinColumn({ name: 'articleId'})
     article!: Article;
 
     @PrimaryColumn()
-    tag_id: number;
+    tagId: number;
 
     @ManyToOne(() => Tag, (tag) => tag.id, {
         onDelete: 'CASCADE'
     })
 
-    @JoinColumn({ name: 'tag_id'})
+    @JoinColumn({ name: 'tagId'})
     tag!: Tag;
 
     @CreateDateColumn({ name: 'created_at'})

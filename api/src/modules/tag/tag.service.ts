@@ -7,8 +7,8 @@ import { DeleteResult } from 'typeorm';
 @Injectable()
 export class TagService {
   constructor(
-    private readonly _tagRepository,
-    private readonly _articleTagRepository,
+    private readonly _tagRepository: TagRepository,
+    private readonly _articleTagRepository: ArticleTagRepository,
   ) {}
 
   //tag作成処理
@@ -30,14 +30,14 @@ export class TagService {
   }
 
   //tag取得処理
-  async findTag(taskId) {
+  async findTag(taskId: number) {
     const tag = await this._tagRepository.findOne(taskId);
     if (!tag) throw new NotFoundException();
     return { tag };
   }
 
   //tag更新処理
-  async updateTag(tagId, param) {
+  async updateTag(tagId: number, param) {
     const origin = await this._tagRepository.findOne(tagId);
     if (!origin) throw new NotFoundException();
     const tag = await this._tagRepository.save({ ...origin, ...param });
@@ -45,8 +45,8 @@ export class TagService {
   }
 
   //tag削除処理
-  async deleteTag(tagId) {
-    const deleteArticleTag = await this._articleTagRepository.delete({ tagId: tagId });
+  async deleteTag(tagId: number) {
+    const deleteArticleTag: DeleteResult = await this._articleTagRepository.delete({ tagId: tagId });
 
     const result = await this._tagRepository.delete(tagId);
 
