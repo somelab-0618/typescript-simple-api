@@ -16,8 +16,10 @@ export class Article extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @ManyToOne(type => User, user => user.articles)
+    @Column('varchar', { name: 'userId'})
+    userId: string;
 
+    @ManyToOne(type => User, user => user.articles)
     @JoinColumn({ name: 'userId' })
     user?: User;
 
@@ -30,7 +32,7 @@ export class Article extends BaseEntity {
     @CreateDateColumn({ name: 'created_at'})
     readonly createdAt!: Date;
 
-    @UpdateDateColumn({ name: 'created_at'})
+    @UpdateDateColumn({ name: 'updated_at'})
     readonly updatedAt!: Date;
 
 }

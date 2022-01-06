@@ -4,7 +4,7 @@ import { IsNotEmpty } from "class-validator";
 export class createArticleRequestDto {
     @IsNotEmpty()
     @ApiProperty()
-    userId: number;
+    userId: string;
 
     @IsNotEmpty()
     @ApiProperty()

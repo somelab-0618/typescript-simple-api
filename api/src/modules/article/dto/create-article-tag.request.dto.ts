@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 
-export class createUserRequestDto {
+export class createArticleTagRequestDto {
     @IsNotEmpty()
     @ApiProperty()
-    name: string;
+    articleId: number;
 
     @IsNotEmpty()
     @ApiProperty()
-    age: string;
+    tagId: number;
 }

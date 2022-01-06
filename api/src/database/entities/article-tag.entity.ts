@@ -14,34 +14,33 @@ import {
 import { Article } from './article.entity';
 import { Tag } from './tag.entity';
 
-@Entity({ name: 'article-tag'})
+@Entity({ name: 'articles-tags'})
 export class ArticleTag extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @PrimaryColumn()
-    articleId: number;
-
     @ManyToOne(() => Article, (article) => article.id, {
         onDelete: 'CASCADE'
     })
-
-    @JoinColumn({ name: 'articleId'})
-    article!: Article;
-
+    @JoinColumn({ name: "articleId" })
     @PrimaryColumn()
-    tagId: number;
+    articleId: number;
 
     @ManyToOne(() => Tag, (tag) => tag.id, {
         onDelete: 'CASCADE'
     })
+    @JoinColumn({ name: "tagId" })
+    @PrimaryColumn()
+    tagId: number;
 
-    @JoinColumn({ name: 'tagId'})
+    @JoinColumn()
+    article!: Article;
+    @JoinColumn()
     tag!: Tag;
 
     @CreateDateColumn({ name: 'created_at'})
     readonly createdAt!: Date;
 
-    @UpdateDateColumn({ name: 'created_at'})
+    @UpdateDateColumn({ name: 'updated_at'})
     readonly updatedAt!: Date;
 }

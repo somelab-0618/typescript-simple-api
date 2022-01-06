@@ -11,7 +11,7 @@ export class Tag extends BaseEntity {
     @CreateDateColumn({ name: 'created_at'})
     readonly createdAt!: Date;
 
-    @UpdateDateColumn({ name: 'created_at'})
+    @UpdateDateColumn({ name: 'updated_at'})
     readonly updatedAt!: Date;
 
 }

@@ -5,5 +5,5 @@ export class updateUserRequestDto {
     name: string;
 
     @ApiProperty()
-    age: number;
+    age: string;
 }

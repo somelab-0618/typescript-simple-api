@@ -13,7 +13,7 @@ import { Article } from './article.entity';
 @Entity({ name: 'users'})
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: string;
 
     @Column('varchar', { name: 'name'})
     name: string;
@@ -24,9 +24,9 @@ export class User extends BaseEntity {
     @CreateDateColumn({ name: 'created_at'})
     readonly createdAt!: Date;
 
-    @UpdateDateColumn({ name: 'created_at'})
+    @UpdateDateColumn({ name: 'updated_at'})
     readonly updatedAt!: Date;
 
     @OneToMany(type => Article, article => article.user)
-    articles: Article[]
+    articles?: Article[]
 }
