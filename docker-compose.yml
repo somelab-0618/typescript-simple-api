@@ -20,6 +20,7 @@ services:
     build:
       context: .
       dockerfile: ./db/Dockerfile
+    platform: linux/x86_64 # M1対応
     restart: always
     hostname: db
     environment:
