@@ -2,19 +2,23 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } fr
 import { ApiExtraModels, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ApiErrorResponse, ApiSuccessResponse } from 'src/common/decoraters';
 import { CommonResponse, CreatedResponse, NotFoundResponse, OkResponse, UnAuthorizedResponse } from 'src/common/types/response';
+import { createUserRequestDto } from './dto/create-user.request.dto';
+import { updateUserRequestDto } from './dto/update-user.request.dto';
+import { UserResponseDto } from './dto/user.response.dto';
+import { UsersResponseDto } from './dto/users.response.dto';
 import { UserService } from './user.service';
 
 @ApiTags('users')
 @Controller('users')
 @ApiExtraModels(ApiUnauthorizedResponse, NotFoundException)
 @ApiErrorResponse(UnAuthorizedResponse)
-@ApiErrorResponse(NotFoundResponse)  
+@ApiErrorResponse(NotFoundResponse)
 export class UserController {
-  constructor(private readonly _userService) {}
-  
+  constructor(private readonly _userService: UserService) {}
+
   @Post()
-  async createUser(@Body() param)  {
-    let responseData;
+  async createUser(@Body() param: createUserRequestDto)  {
+    let responseData: UserResponseDto;
 
     responseData = await this._userService.createUser(param);
 
@@ -23,7 +27,7 @@ export class UserController {
 
   @Get()
   async getUsers(): Promise<CommonResponse> {
-    let responseData;
+    let responseData: UsersResponseDto;
 
     responseData = await this._userService.getUsers();
 
@@ -31,8 +35,8 @@ export class UserController {
   }
 
   @Get(':userId')
-  async getUser(@Param('userId') userId) {
-    let responseData;
+  async getUser(@Param('userId') userId: string) {
+    let responseData: UserResponseDto;
 
     responseData = await this._userService.findUser(userId);
 
@@ -41,10 +45,10 @@ export class UserController {
 
   @Put(':userId')
   async updateUser(
-    @Param('userId') userId,
-    @Body() param
+    @Param('userId') userId: string,
+    @Body() param: updateUserRequestDto
   ) {
-    let responseData;
+    let responseData: UserResponseDto;
 
     responseData = await this._userService.updateUser(userId, param);
 

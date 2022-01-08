@@ -12,7 +12,7 @@ services:
       - '3000:3000'
     volumes:
       - ./api:/src
-      - ./src/node_modules
+      - /src/node_modules
     tty: true
     container_name: api
 
@@ -20,11 +20,12 @@ services:
     build:
       context: .
       dockerfile: ./db/Dockerfile
+    platform: linux/x86_64 # M1対応
     restart: always
     hostname: db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
+      MYSQL_USER: user
       MYSQL_PASSWORD: root
       MYSQL_DATABASE: sample
     volumes:

@@ -2,17 +2,24 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } fr
 import { ApiExtraModels, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ApiErrorResponse } from 'src/common/decoraters';
 import { CreatedResponse, NotFoundResponse, OkResponse, UnAuthorizedResponse } from 'src/common/types/response';
+import { DeleteResult } from 'typeorm';
+import { ArticleService } from './article.service';
+import { ArticleTagResponseDto } from './dto/article-tag.response.dto';
+import { ArticleResponseDto } from './dto/article.response.dto';
+import { createArticleTagRequestDto } from './dto/create-article-tag.request.dto';
+import { createArticleRequestDto } from './dto/create-article.request.dto';
+import { updateArticleRequestDto } from './dto/update-article.request.dto';
 @ApiTags('articles')
 @Controller('articles')
 @ApiExtraModels(ApiUnauthorizedResponse, NotFoundException)
 @ApiErrorResponse(UnAuthorizedResponse)
-@ApiErrorResponse(NotFoundResponse) 
+@ApiErrorResponse(NotFoundResponse)
 export class ArticleController {
-  constructor(private readonly _articleService) {}
-  
+  constructor(private readonly _articleService:  ArticleService) {}
+
   @Post()
-  async createArticle(@Body() param) {
-    let responseData;
+  async createArticle(@Body() param: createArticleRequestDto) {
+    let responseData: ArticleResponseDto;
 
     responseData = await this._articleService.createArticle(param);
 
@@ -29,9 +36,9 @@ export class ArticleController {
   }
 
   @Get(':articleId')
-  async findArticle(@Param('articleId') articleId) {
-    let responseData;
-    
+  async findArticle(@Param('articleId') articleId: number) {
+    let responseData: ArticleResponseDto;
+
     responseData = await this._articleService.findArticle(articleId);
 
     return new OkResponse(responseData);
@@ -39,10 +46,10 @@ export class ArticleController {
 
   @Put(':articleId')
   async updateArticle(
-    @Param('articleId') articleId,
-    @Body() param
+    @Param('articleId') articleId: number,
+    @Body() param: updateArticleRequestDto
   ) {
-    let responseData;
+    let responseData: ArticleResponseDto;
 
     responseData = await this._articleService.updateArticle(articleId, param);
 
@@ -50,17 +57,17 @@ export class ArticleController {
   }
 
   @Delete(':articleId')
-  async deleteArticle(@Param('articleId') articleId) {
-    let responseData;
-    
+  async deleteArticle(@Param('articleId') articleId: number) {
+    let responseData: DeleteResult;
+
     responseData = await this._articleService.deleteArticle(articleId);
 
     return new OkResponse(responseData);
   }
 
   @Post('tags')
-  async joinTag(@Body() param) {
-    let responseData;
+  async joinTag(@Body() param: createArticleTagRequestDto) {
+    let responseData: ArticleTagResponseDto;
 
     responseData = await this._articleService.joinTag(param);
 
@@ -69,10 +76,10 @@ export class ArticleController {
 
   @Delete(':articleId/tags/:tagId')
   async releaseTag(
-    @Param('article') articleId,
-    @Param('tagId') tagId
+    @Param('article') articleId: number,
+    @Param('tagId') tagId: number
   ) {
-    let responseData;
+    let responseData: DeleteResult;
 
     responseData = await this._articleService.releaseTag(articleId, tagId);
 
